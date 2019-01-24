@@ -1,0 +1,10 @@
+/.idea
+/__pycache__
+/builds
+/src/dist
+/src/build
+/src/nodreVOD.spec
+/src/setup.py
+/src/parts
+/src/__pycache__
+/python/.idea
