@@ -9,3 +9,4 @@
 /src/__pycache__
 /python/.idea
 */__pycache__
+*__pycache__/
