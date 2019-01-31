@@ -8,3 +8,4 @@
 /src/parts
 /src/__pycache__
 /python/.idea
+*/__pycache__
