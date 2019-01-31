@@ -13,6 +13,16 @@ def pr_str(mal) -> str:
         # print(mal.list())
         # print(o + " )))oooo")
         # print(mal.toString())
+        o = ""
+        for i in mal.list():
+            if(isinstance(i, MalTypes.MalList)):
+                o += pr_str(i)
+            else:
+                o += pr_str(i)
+            o += ' '
+        o = o[:-1]
+        return '(' + o + ')'
+    elif (isinstance(mal, MalTypes.MalInt)):
         return mal.toString()
     else:
         print("VERYBAD")

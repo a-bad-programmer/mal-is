@@ -1,4 +1,4 @@
-import re
+import regex
 from step1 import MalTypes
 import step1.MalTypes
 
@@ -8,6 +8,8 @@ class Reader():
         self.tokens = tokens
     def next(self):
         self.pos += 1
+        #print(self.tokens)
+        #print(self.pos)
         return self.tokens[self.pos - 1]
 
     def peak(self):
@@ -18,21 +20,30 @@ class Reader():
 def read_list(reader:Reader):
     list = MalTypes.MalList()
     reader.next()
-    while True:
-        c = read_form(reader)
-        if c.string == ')':
-            break
-        list.add(c)
+    token = reader.peak()
+    print("STARR")
+    while str(token) != ')':
+        list.add(read_form(reader))
+        print(token)
+        #input()
+        token = reader.peak()
+    reader.next()
+    print(''.join(list.list().__str__()))
     return list
 
 def read_atom(reader:Reader):
     token = reader.next()
+    #print(str(token) + "TOKEN")
     if(token.isnumeric()):
-        return int(token)
+        return MalTypes.MalInt(int(token))
     else:
         return MalTypes.Symbol(token)
-def tokenize(tokens):
-    re.split(r"[\s,]*(~@|[\[\]{}()'`~^@]|\"(?:\\.|[^\\\"])*\"?|;.*|[^\s\[\]{}('\"`,;)]*)", tokens)
+def tokenize(tokens:list):
+    tokens = regex.split(r"[\s,]*(~@|[\[\]{}()'`~^@]|\"(?:\\.|[^\\\"])*\"?|;.*|[^\s\[\]{}('\"`,;)]*)", tokens)
+    for i in tokens:
+        if i == '':
+            tokens.remove(i)
+    #print(tokens)
     return tokens
 def read_str(string):
     return read_form(Reader(tokenize(string)))
@@ -42,3 +53,4 @@ def read_form(reader:Reader):
         return read_list(reader)
     else:
         return read_atom(reader)
+
