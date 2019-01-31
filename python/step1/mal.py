@@ -1,21 +1,23 @@
 import sys, re
 
+from step1 import reader, printer
+
+
 def READ(x):
-    return x
+    return(reader.read_str(x))
 
 def EVAL(x):
     return x
 
 def PRINT(x):
-    return x
+    return printer.pr_str(x)
 
 def rep(x):
-    return READ(EVAL(PRINT(x)))
+    return PRINT(EVAL(READ(x)))
 
 def repl():
     try:
         x = input()
-
         print(rep(x))
     except EOFError:
         exit()
