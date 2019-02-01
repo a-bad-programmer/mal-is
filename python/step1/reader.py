@@ -12,7 +12,7 @@ class Reader():
         #print(self.pos)
         return self.tokens[self.pos - 1]
 
-    def peak(self):
+    def peek(self):
         if len(self.tokens) > self.pos:
             return self.tokens[self.pos]
         else:
@@ -20,13 +20,13 @@ class Reader():
 def read_list(reader:Reader):
     listo = []
     reader.next()
-    token = reader.peak()
+    token = reader.peek()
     print("STARR")
     while str(token) != ')':
         listo.append(read_form(reader))
         print(token)
         #input()
-        token = reader.peak()
+        token = reader.peek()
     reader.next()
     print(''.join(listo.__str__()))
     return MalTypes.MalList(listo)
@@ -49,7 +49,7 @@ def read_str(string):
     return read_form(Reader(tokenize(string)))
 
 def read_form(reader:Reader):
-    token = reader.peak()
+    token = reader.peek()
     if(token == '('):
         return read_list(reader)
     else:
