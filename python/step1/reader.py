@@ -18,18 +18,18 @@ class Reader():
         else:
             return None
 def read_list(reader:Reader):
-    list = MalTypes.MalList()
+    listo = []
     reader.next()
     token = reader.peak()
     print("STARR")
     while str(token) != ')':
-        list.add(read_form(reader))
+        listo.append(read_form(reader))
         print(token)
         #input()
         token = reader.peak()
     reader.next()
-    print(''.join(list.list().__str__()))
-    return list
+    print(''.join(listo.__str__()))
+    return MalTypes.MalList(listo)
 
 def read_atom(reader:Reader):
     token = reader.next()
@@ -43,13 +43,14 @@ def tokenize(tokens:list):
     for i in tokens:
         if i == '':
             tokens.remove(i)
-    #print(tokens)
+    print(tokens)
     return tokens
 def read_str(string):
     return read_form(Reader(tokenize(string)))
 
 def read_form(reader:Reader):
-    if(reader.peak() == '('):
+    token = reader.peak()
+    if(token == '('):
         return read_list(reader)
     else:
         return read_atom(reader)
