@@ -1,6 +1,6 @@
 import regex
-from step1 import MalTypes
-import step1.MalTypes
+from step2 import MalTypes
+import step2.MalTypes
 
 KEYWORD_PREFIX = 0x29E
 
@@ -59,7 +59,7 @@ def read_atom(reader:Reader):
     if(token.isnumeric()):
         return MalTypes.MalInt(int(token))
     else:
-        return MalTypes.Symbol(token)
+        return MalTypes.MalSymbol(token)
 
 
 def tokenize(tokens:list):

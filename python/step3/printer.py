@@ -1,11 +1,12 @@
-from step1 import MalTypes
+from step3 import MalTypes
 
 KEYWORD_PREFIX = 0x29E
 
 def pr_str(mal, print_readably = True) -> str:
-    # print("TYPE " + str(type(mal)))
+    print("TYPE " + str(type(mal)))
+    print("WW " + str(mal))
     o = ""
-    if isinstance(mal, MalTypes.Symbol):
+    if isinstance(mal, MalTypes.MalSymbol):
         # print(mal.toString() + "   meee")
         return mal.toString()
     elif (isinstance(mal, int)):
@@ -13,8 +14,10 @@ def pr_str(mal, print_readably = True) -> str:
     elif (isinstance(mal, str)):
         if(mal[0] == KEYWORD_PREFIX):
             return "keyword:" + mal[1:]
-        else:
-            return '' + mal + ''
+        print(mal + "AAAAAA")
+        return '' + mal + ''
+    elif (mal is MalTypes.MalBool):
+        return str(mal.value())
     elif (isinstance(mal, MalTypes.MalList)):
         # print(mal.list())
         # print(o + " )))oooo")
@@ -43,5 +46,10 @@ def pr_str(mal, print_readably = True) -> str:
         return '[ ' + o + ' ]'
     elif (isinstance(mal, MalTypes.MalInt)):
         return mal.toString()
+    elif(mal is MalTypes.Null):
+        return "Null"
+    elif(callable(mal)):
+       return "#<function>"
     else:
-        print("VERYBAD")
+        type(mal)
+        str(mal + "awdwaddwada")

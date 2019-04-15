@@ -1,6 +1,5 @@
 import regex
-from step1 import MalTypes
-import step1.MalTypes
+from step3 import MalTypes
 
 KEYWORD_PREFIX = 0x29E
 
@@ -18,10 +17,11 @@ class Reader():
         if len(self.tokens) > self.pos:
             return self.tokens[self.pos]
         else:
-            return None
+            print("OH GOD EVERYTHING IS ON FIRE")
+            return MalTypes.Null
 
 def read_string(reader:Reader):
-    token = str(reader.peek())
+    token = MalTypes.MalString(reader.peek())
     token = token.replace("\\\"", "\"")
     token = token.replace("\\\\", '\\')
     token = token.replace("\\n", "\n")
@@ -38,7 +38,7 @@ def read_list(reader:Reader):
         #input()
         token = reader.peek()
     reader.next()
-    print(''.join(listo.__str__()))
+    print(''.join(listo.__str__()) + 'LOSSSOO')
     return MalTypes.MalList(listo)
 def read_vector(reader:Reader):
     listo = []
@@ -46,20 +46,31 @@ def read_vector(reader:Reader):
     token = reader.peek()
     while str(token) != ']':
         listo.append(read_form(reader))
-        print(token)
+        print(token + "  TOKEN TOKEN TOKEN")
         #input()
         token = reader.peek()
     reader.next()
-    print(''.join(listo.__str__()))
+    print(''.join(listo.__str__()) + " LISTOO")
     return MalTypes.MalVector(listo)
 
 def read_atom(reader:Reader):
     token = reader.next()
-    #print(str(token) + "TOKEN")
+    print(str(token) + "TOKEN")
     if(token.isnumeric()):
         return MalTypes.MalInt(int(token))
+    elif (token == "true"):
+        return True
+    elif (token == "false"):
+        return False
+    elif (token == "nil"):
+        return None
+    elif (token == ""):
+        return None
     else:
-        return MalTypes.Symbol(token)
+        return MalTypes.MalSymbol(token)
+
+
+
 
 
 def tokenize(tokens:list):

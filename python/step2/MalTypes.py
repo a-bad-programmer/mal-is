@@ -1,8 +1,14 @@
-class MalList():
+class MalType():
+    def __init__(self, value):
+        self.value = value
+class MalList(MalType):
     def __init__(self, items:list = []):
         self.items = items
     def add(self, thing):
         self.items.append(thing)
+
+    def __getitem__(self, item):
+        return self.items[item]
     def len(self):
         return self.items.len()
     def toString(self):
@@ -14,8 +20,10 @@ class MalList():
         return '(' + o + ')'
     def list(self):
         return self.items
+    def value(self):
+        return self.items
 
-class MalVector():
+class MalVector(MalType):
     def __init__(self, items: list = []):
         self.items = items
 
@@ -36,15 +44,17 @@ class MalVector():
     def list(self):
         return self.items
 
-class Symbol():
-    def __init__(self, _string):
-        self.string = _string
+class MalSymbol(MalType):
+    def __init__(self, value):
+        self.value = value
     def toString(self):
-        return self.string
+        return self.value
     def __str__(self):
-        return self.string
+        return self.value
+    def string(self):
+        return self.value
 
-class MalInt():
+class MalInt(MalType):
     def __init__(self, _value:int):
         self.value:int = _value
     def toString(self):
@@ -57,5 +67,9 @@ class MalInt():
         return self.value
     def __str__(self):
         return str(self.value)
+    def __mul__(self, other):
+        return other * self.value
+    def __pow__(self, power, modulo=None):
+        return self.value**power
 
 SYMBOLS = [""]
